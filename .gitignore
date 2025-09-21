@@ -1,1 +1,12 @@
-/env*
+
+Node
+node_modules
+npm-debug.log
+.env
+
+Logs
+*.log
+
+OS
+.DS_Store
+Thumbs.db

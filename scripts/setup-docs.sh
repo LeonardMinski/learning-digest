@@ -1,3 +1,10 @@
+#!/bin/bash
+set -euo pipefail
+
+echo "📄 Setting up documentation files..."
+
+# --- README.md ---
+cat > README.md << 'EOF'
 # 📚 Learning Digest
 
 Automated **daily learning notes** for full-stack engineering — powered by Gemini/Groq LLMs, saved to **Notion**, and delivered via **email (Resend)**.
@@ -33,26 +40,3 @@ The project runs automatically every day with **GitHub Actions**.
 ```bash
 git clone https://github.com/<your-username>/learning-digest.git
 cd learning-digest
-2. Install Dependencies
-bash
-Copy code
-npm install
-3. Create .env
-env
-Copy code
-GOOGLE_API_KEY=your-gemini-key
-GROQ_API_KEY=your-groq-key
-NOTION_TOKEN=your-notion-token
-NOTION_DB_ID=your-notion-db-id
-RESEND_API_KEY=your-resend-key
-EMAIL_TO=your@email.com
-4. Run Locally
-bash
-Copy code
-node scripts/learning.js
-5. GitHub Actions
-Secrets must be added in your repo → Settings > Secrets and variables > Actions.
-
-Workflow file: .github/workflows/learning.yml.
-
-Runs daily (or manually from the Actions tab).

@@ -1,3 +1,10 @@
+#!/bin/bash
+
+# Navigate to repo root (assumes you're in learning-digest)
+echo "📄 Creating documentation files..."
+
+# --- README.md ---
+cat > README.md << 'EOF'
 # 📚 Learning Digest
 
 Automated **daily learning notes** for full-stack engineering — powered by Gemini/Groq LLMs, saved to **Notion**, and delivered via **email (Resend)**.
@@ -56,3 +63,74 @@ Secrets must be added in your repo → Settings > Secrets and variables > Action
 Workflow file: .github/workflows/learning.yml.
 
 Runs daily (or manually from the Actions tab).
+EOF
+
+--- CHANGELOG.md ---
+cat > CHANGELOG.md << 'EOF'
+
+📜 Changelog
+All notable changes to this project will be documented here.
+
+[Unreleased]
+Improve email formatting
+
+Add Slack/Discord integration option
+
+[0.1.0] - 2025-09-21
+Added
+First version of daily digest generator
+
+Gemini → Groq fallback for note generation
+
+Saves digests into Notion database
+
+Email delivery with Resend
+
+GitHub Actions automation
+EOF
+
+--- CONTRIBUTING.md ---
+cat > CONTRIBUTING.md << 'EOF'
+
+🤝 Contributing Guide
+Thanks for your interest in contributing!
+
+Development Setup
+Clone the repo
+
+Run npm install
+
+Copy .env.example to .env and fill in API keys
+
+Submitting Changes
+Use feature branches (feature/my-change)
+
+Run npm test (if available)
+
+Open a pull request with a clear description
+
+Code Style
+JavaScript (ES2021+)
+
+Keep functions small and focused
+
+Prefer async/await over callbacks
+EOF
+
+--- .gitignore ---
+cat > .gitignore << 'EOF'
+
+Node
+node_modules
+npm-debug.log
+.env
+
+Logs
+*.log
+
+OS
+.DS_Store
+Thumbs.db
+EOF
+
+echo "✅ Documentation files created: README.md, CHANGELOG.md, CONTRIBUTING.md, .gitignore"

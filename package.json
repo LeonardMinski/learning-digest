@@ -4,7 +4,8 @@
   "main": "scripts/learning.js",
   "type": "module",
   "scripts": {
-    "start": "node scripts/learning.js"
+    "start": "node scripts/learning.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "dependencies": {
     "@notionhq/client": "^2.3.0",
@@ -14,5 +15,8 @@
     "nodemailer": "^6.9.0",
     "openai": "^4.0.0",
     "resend": "^6.1.0"
+  },
+  "devDependencies": {
+    "jest": "^30.1.3"
   }
 }

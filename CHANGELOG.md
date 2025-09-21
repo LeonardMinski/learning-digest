@@ -18,3 +18,13 @@ Saves digests into Notion database
 Email delivery with Resend
 
 GitHub Actions automation
+
+# Changelog
+
+## [2025-09-21]
+
+### Fixed
+- **Unit tests:** Updated mocks for `node-fetch` in `generateNote()`
+- Adjusted assertions to ensure Gemini and Groq API calls are tested correctly
+- Ensured compatibility with ESM imports
+

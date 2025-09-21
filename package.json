@@ -1,0 +1,14 @@
+{
+  "name": "learning-digest",
+  "version": "1.0.0",
+  "main": "scripts/learning.js",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/learning.js"
+  },
+  "dependencies": {
+    "openai": "^4.0.0",
+    "@notionhq/client": "^2.2.8",
+    "nodemailer": "^6.9.0"
+  }
+}

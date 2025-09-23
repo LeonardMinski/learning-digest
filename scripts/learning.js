@@ -9,6 +9,35 @@ const resend = new Resend(process.env.RESEND_API);
 
 // --- Generate Learning Note ---
 export async function generateNote() {
+  const prompt = `
+You are a tutor generating a short daily learning digest for a full-stack engineer.
+
+Requirements:
+- Pick 1 topic per day from all these categories:
+  - JavaScript / TypeScript fundamentals
+  - React / Next.js features
+  - Node.js backend techniques
+  - API design and integration
+  - DevOps (CI/CD, GitHub Actions, Docker, Kubernetes)
+  - Cloud services (AWS, Azure, GCP)
+  - Software architecture (monolith vs microservices, event-driven, serverless)
+  - Design patterns (Factory, Observer, Singleton, etc.)
+  - Modern front-end architecture (atomic design, state management, hooks)
+  - New or emerging features in web tech (Edge functions, Bun, Vite, server components)
+
+Format:
+- **TL;DR (1–2 sentences)**: the big idea in plain English but simple and memorable
+- **Explanation (3–6 sentences)**: how it works and why it’s useful
+- **Code Example**: a short, clear snippet
+
+Use Markdown formatting (**bold**, \`code\`, \`\`\`fences\`\`\`).
+Make it practical (something useful in real projects and valuable for senior dev level).
+Do not repeat previous notes.
+
+Output only ONE daily note.
+Keep the explanation ≤ 6 sentences and code example ~20 lines.
+`;
+
   try {
     const geminiRes = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" +
@@ -17,7 +46,7 @@ export async function generateNote() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: "Test prompt" }] }],
+          contents: [{ parts: [{ text: prompt }] }],
         }),
       }
     );
@@ -30,6 +59,7 @@ export async function generateNote() {
     };
   } catch (err) {
     console.warn("⚠️ Gemini failed:", err.message);
+
     const groqRes = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
       {
@@ -40,7 +70,13 @@ export async function generateNote() {
         },
         body: JSON.stringify({
           model: "mixtral-8x7b-32768",
-          messages: [{ role: "user", content: "Fallback note" }],
+          messages: [
+            {
+              role: "user",
+              content:
+                "Summarise one modern web development concept concisely with a short code example.",
+            },
+          ],
           max_tokens: 300,
         }),
       }
@@ -101,8 +137,6 @@ export async function sendEmail(note, model) {
   console.log("✅ Email sent via Resend");
 }
 
-
-// --- Main ---
 // --- Main ---
 export async function main() {
   const { text, model } = await generateNote();
@@ -117,4 +151,3 @@ export async function main() {
 if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch(console.error);
 }
-

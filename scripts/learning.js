@@ -7,6 +7,12 @@ import { marked } from "marked";
 const notion = new NotionClient({ auth: process.env.NOTION_TOKEN });
 const resend = new Resend(process.env.RESEND_API);
 
+const today = new Date().toLocaleDateString("en-GB", {
+  timeZone: "Europe/London",
+});
+
+
+
 // --- Generate Learning Note ---
 export async function generateNote() {
   const prompt = `
@@ -74,10 +80,10 @@ Keep the explanation ≤ 6 sentences and code example ~20 lines.
             {
               role: "user",
               content:
-                "Summarise one modern web development concept concisely with a short code example.",
+                "Summarise five modern web development concept concisely with a short code example.",
             },
           ],
-          max_tokens: 300,
+          max_tokens: 5000,
         }),
       }
     );
@@ -110,7 +116,7 @@ export async function saveToNotion(note, model) {
         title: [
           {
             text: {
-              content: `Learning Note - ${new Date().toLocaleDateString()} (${model})`,
+              content: `Learning Note - ${today} (${model})`,
             },
           },
         ],
